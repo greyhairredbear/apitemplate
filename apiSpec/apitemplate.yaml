@@ -1,0 +1,303 @@
+# install openapi-generator and run following command to generate a client lib based on ktor
+# `openapi-generator generate -g kotlin --input-spec api-spec.yaml -o ../api --library multiplatform -c config.json`
+
+# run following commanc to generate the server stubs
+# `openapi-generator generate -g kotlin-server --input-spec apiSpec/apitemplate.yaml -o ./server -c apiSpec/config.json`
+
+# register
+# login
+# logout
+
+# new group
+
+# get groups (name, participants, unreads)
+# get group riddles
+# get riddle comments
+
+# post photo to group
+# post answer to group riddle
+# post comment to group riddle
+
+# get group rankings
+
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: ApiTemplate
+servers:
+  - url: localhost:2608
+    description: Dev Server
+# TODO
+#  - url: localhost:11080
+#    description: Daily server
+paths:
+  /login:
+    post: 
+      summary: Login
+      operationId: login
+      requestBody:
+        description: Username and password for login
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginData'
+      responses: 
+        '200':
+          description: Login Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+      security: []
+
+  /logout: 
+    post: 
+      summary: Logout
+      operationId: logout
+      responses: 
+        '204':
+          description: Logout Response
+
+  /{userId}/groups:
+    get:
+      summary: Get a list of all groups of logged in user
+      operationId: groups
+      parameters:
+        - name: userId
+          in: path
+          description: User ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Groups Response
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/GroupsResponse'
+
+
+# TODO: begin unused example
+#  /app/sync:
+#    get:
+#      summary: Sync application data
+#      operationId: app/sync
+#      parameters:
+#        - name: sync-from
+#          in: query
+#          description: fetch data from between this date and now
+#          required: false
+#          schema:
+#            type: string
+#            format: date-time
+#      responses:
+#        '200':
+#          description: sync response
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/SyncResponse'
+#      security:
+#        - bearerAuth: []
+
+
+security:
+  - bearerAuth: []
+
+components: 
+  securitySchemes:
+    bearerAuth:
+      type: apiKey
+      name: x-auth-token
+      in: header
+
+  schemas: 
+    LoginData: 
+      type: object
+      required: 
+        - user
+        - password
+      properties: 
+        user: 
+          type: string
+        password: 
+          type: string
+
+    GroupsResonse:
+      type: object
+      #TODO
+
+#    SyncResponse:
+#      type: object
+#      required:
+#        - issues
+#        - technicians
+#        - acceptedIssues
+#      properties:
+#        issues:
+#          type: array
+#          items:
+#            $ref: '#components/schemas/IssueWrapperSyncDto'
+#        technicians:
+#          type: array
+#          items:
+#            $ref: '#components/schemas/TechnicianWrapperSyncDto'
+#        acceptedIssues:
+#          type: array
+#          items:
+#            $ref: '#components/schemas/AcceptedIssueWrapperSyncDto'
+#        latestTimestamp:
+#          type: string
+#          format: date-time
+
+#    TechnicianSyncDto:
+#      type: object
+#      required:
+#        - id
+#        - firstName
+#        - lastName
+#        - updatedAt
+#        - createdAt
+#      properties:
+#        id:
+#          type: integer
+#          format: int64
+#        firstName:
+#          type: string
+#        lastName:
+#          type: string
+#        phoneNumber:
+#          type: string
+#        updatedAt:
+#          type: string
+#          format: date-time
+#        createdAt:
+#          type: string
+#          format: date-time
+
+#    IssueSyncDto:
+#      type: object
+#      required:
+#        - id
+#        - externalId
+#        - status
+#        - updatedAt
+#        - createdAt
+#      properties:
+#        id:
+#          type: integer
+#          format: int64
+#        externalId:
+#          type: integer
+#          format: int64
+#        contactPerson:
+#          type: string
+#        address:
+#          type: string
+#        description:
+#          type: string
+#        note:
+#          type: string
+#        status:
+#          type: string
+#        updatedAt:
+#          type: string
+#          format: date-time
+#        createdAt:
+#          type: string
+#          format: date-time
+#        latestAssignmentDate:
+#          type: string
+#          format: date-time
+
+#    AcceptedIssueSyncDto:
+#      type: object
+#      required:
+#        - id
+#        - issueId
+#        - technicianId
+#        - createdAt
+#      properties:
+#        id:
+#          type: integer
+#          format: int64
+#        issueId:
+#          type: integer
+#          format: int64
+#        technicianId:
+#          type: integer
+#          format: int64
+#        createdAt:
+#          type: string
+#          format: date-time
+    
+#    IssueWrapperSyncDto:
+#      type: object
+#      required:
+#        - syncStatus
+#        - issue
+#      properties:
+#        syncStatus:
+#          $ref: '#components/schemas/SyncStatus'
+#        issue:
+#          $ref: '#components/schemas/IssueSyncDto'
+
+#    TechnicianWrapperSyncDto:
+#      type: object
+#      required:
+#        - syncStatus
+#      properties:
+#        syncStatus:
+#          $ref: '#components/schemas/SyncStatus'
+#        technician:
+#          $ref: '#components/schemas/TechnicianSyncDto'
+
+#    AcceptedIssueWrapperSyncDto:
+#      type: object
+#      required:
+#        - syncStatus
+#      properties:
+#        syncStatus:
+#          $ref: '#components/schemas/SyncStatus'
+#        acceptedIssue:
+#          $ref: '#components/schemas/AcceptedIssueIssueSyncDto'
+
+#    SyncStatus:
+#      type: string
+#      enum:
+#        - INSERTED
+#        - UPDATED
+#        - DELETED
+
+    LoginResponse: 
+      type: object
+      required: 
+        - userId
+        - username
+        - firstName
+        - lastName
+        - permissions
+      properties: 
+        userId: 
+          type: integer
+          format: int64
+        username: 
+          type: string
+        firstName: 
+          type: string
+        lastName: 
+          type: string
+        locale: 
+          type: string
+        permissions: 
+          type: array
+          items: 
+            $ref: '#components/schemas/NeubauerPermission'
+
+    NeubauerPermission:
+      enum:
+        - LOGIN
+        - VIEW_RESOURCE_PLAN_TECHNICIAN
