@@ -8,7 +8,7 @@ import Versions.REST_ASSURED_VERSION
 import Versions.SL4J_VERSION
 
 object Versions {
-    const val KOTLIN_VERSION = "1.3.72"
+    const val KOTLIN_VERSION = "1.4.10"
 
     const val ARROW_VERSION = "0.10.5"
 
@@ -19,7 +19,7 @@ object Versions {
     //    const val POSTGRES_VERSION = "42.2.14"
     const val H2_VERSION = "1.4.200"
 
-    const val KOTEST_VERSION = "4.1.0"
+    const val KOTEST_VERSION = "4.3.0"
     const val MOCKK_VERSION = "1.10.0"
     const val REST_ASSURED_VERSION = "4.3.0"
 
@@ -62,7 +62,7 @@ object Data {
 object Testing {
     private const val KOTEST_GROUP = "io.kotest"
     const val KOTEST_RUNNER = "$KOTEST_GROUP:kotest-runner-junit5-jvm:$KOTEST_VERSION"
-    const val KOTEST_RUNNER_CONSOLE = "$KOTEST_GROUP:kotest-runner-console-jvm:$KOTEST_VERSION"
+    const val KOTEST_JUNIT_RUNNER = "$KOTEST_GROUP:kotest-runner-junit5:$KOTEST_VERSION"
     const val KOTEST_ASSERTIONS = "$KOTEST_GROUP:kotest-assertions-core-jvm:$KOTEST_VERSION"
     const val KOTEST_PROPERTIES = "$KOTEST_GROUP:kotest-property-jvm:$KOTEST_VERSION"
 
