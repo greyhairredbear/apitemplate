@@ -23,11 +23,11 @@ class Version(id: EntityID<Int>): IntEntity(id) {
 }
 
 fun Iterable<Version>.max(): Version? {
-    return maxBy { it.major }?.major
+    return maxByOrNull { it.major }?.major
         ?.let { maxMajor -> filter { it.major == maxMajor } }
         ?.let { maxMajorVersions ->
-            maxMajorVersions.maxBy { it.minor }?.minor
+            maxMajorVersions.maxByOrNull { it.minor }?.minor
                 ?.let { maxMinor -> maxMajorVersions.filter { it.minor == maxMinor } }
         }
-        ?.maxBy { it.patch }
+        ?.maxByOrNull { it.patch }
 }

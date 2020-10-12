@@ -1,7 +1,7 @@
 package com.greyhairredbear.apitemplate.javalin
 
-import com.greyhairredbear.apitemplate.routes.report
-import com.greyhairredbear.apitemplate.routes.version
+import com.greyhairredbear.apitemplate.javalin.routes.report
+import com.greyhairredbear.apitemplate.javalin.routes.version
 import io.javalin.Javalin
 import io.javalin.core.security.BasicAuthCredentials
 import io.javalin.http.Context

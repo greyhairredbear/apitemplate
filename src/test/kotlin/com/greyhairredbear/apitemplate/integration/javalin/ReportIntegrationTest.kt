@@ -1,4 +1,4 @@
-package com.greyhairredbear.apitemplate.integration
+package com.greyhairredbear.apitemplate.integration.javalin
 
 import com.greyhairredbear.apitemplate.dal.setupDb
 import com.greyhairredbear.apitemplate.javalin.app
@@ -6,21 +6,25 @@ import io.kotest.core.spec.style.FunSpec
 import io.restassured.RestAssured
 import io.restassured.module.kotlin.extensions.Then
 import io.restassured.module.kotlin.extensions.When
+import org.apache.http.HttpStatus
 import org.hamcrest.Matchers.equalTo
 
-class VersionIntegrationTest: FunSpec({
-    test("Version API should return 200 as status code and correct version as body") {
+class ReportIntegrationTest: FunSpec({
+    test("Report route should return 204 as status code and correct body") {
         RestAssured.baseURI = "http://localhost"
+
+        // TODO: maybe use different ports per test to ensure no port conflict when running integration tests in parallel
         RestAssured.port = 7070
 
+        // TODO extract setup / shutdown to common integration test
         setupDb()
         val app = app().start(7070)
 
         When {
-            get("/version")
+            post("/report")
         } Then {
-            statusCode(200)
-            body(equalTo("0.1.0"))
+            statusCode(HttpStatus.SC_NO_CONTENT)
+            body(equalTo(""))
         }
 
         app.stop()

@@ -39,10 +39,15 @@ dependencies {
     implementation(ServerFramework.JAVALIN)
     implementation(ServerFramework.JAVALIN_OPENAPI)
     implementation(ServerFramework.SL4J)
+    implementation(platform(ServerFramework.HTTP4K_PLATFORM))
+    implementation(ServerFramework.HTTP4K_CORE)
+    implementation(ServerFramework.HTTP4K_JETTY)
+
     implementation(Data.EXPOSED_CORE)
     implementation(Data.EXPOSED_JDBC)
     implementation(Data.EXPOSED_DAO)
     implementation(Data.EXPOSED_JAVA_TIME)
+
     implementation(Core.ARROW_FX)
     implementation(Core.ARROW_OPTICS)
     implementation(Core.ARROW_SYNTAX)

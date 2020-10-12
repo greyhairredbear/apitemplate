@@ -1,11 +1,11 @@
-package com.greyhairredbear.apitemplate.routes
+package com.greyhairredbear.apitemplate.javalin.routes
 
 import arrow.fx.IO
 import arrow.fx.extensions.fx
 import com.greyhairredbear.apitemplate.dal.Version
 import com.greyhairredbear.apitemplate.dal.max
 import com.greyhairredbear.apitemplate.javalin.ApiRole
-import com.greyhairredbear.apitemplate.routes.model.response.VersionResponse
+import com.greyhairredbear.apitemplate.javalin.routes.model.response.VersionResponse
 import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.core.security.SecurityUtil
 import io.javalin.plugin.openapi.dsl.OpenApiDocumentation

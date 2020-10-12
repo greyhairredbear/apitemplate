@@ -1,9 +1,9 @@
-package com.greyhairredbear.apitemplate.routes
+package com.greyhairredbear.apitemplate.javalin.routes
 
 import arrow.fx.IO
 import arrow.fx.extensions.fx
 import com.greyhairredbear.apitemplate.javalin.ApiRole
-import com.greyhairredbear.apitemplate.routes.model.request.ReportBody
+import com.greyhairredbear.apitemplate.javalin.routes.model.request.ReportBody
 import io.javalin.apibuilder.ApiBuilder.post
 import io.javalin.core.security.SecurityUtil
 import io.javalin.plugin.openapi.dsl.OpenApiDocumentation

@@ -1,4 +1,4 @@
-package com.greyhairredbear.apitemplate.routes.model.request
+package com.greyhairredbear.apitemplate.javalin.routes.model.request
 
 import java.time.LocalDateTime
 

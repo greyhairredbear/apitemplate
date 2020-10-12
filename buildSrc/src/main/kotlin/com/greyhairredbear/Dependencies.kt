@@ -1,6 +1,7 @@
 import Versions.ARROW_VERSION
 import Versions.EXPOSED_VERSION
 import Versions.H2_VERSION
+import Versions.HTTP4K_VERSION
 import Versions.JAVALIN_VERSION
 import Versions.KOTEST_VERSION
 import Versions.MOCKK_VERSION
@@ -14,6 +15,7 @@ object Versions {
 
     const val JAVALIN_VERSION = "3.9.1"
     const val SL4J_VERSION = "1.7.30"
+    const val HTTP4K_VERSION = "3.266.0"
 
     const val EXPOSED_VERSION = "0.26.1"
     //    const val POSTGRES_VERSION = "42.2.14"
@@ -47,7 +49,14 @@ object ServerFramework {
     const val JAVALIN_OPENAPI = "$JAVALIN_GROUP:javalin-openapi:$JAVALIN_VERSION"
 
     const val SL4J = "org.slf4j:slf4j-simple:$SL4J_VERSION"
+
+    private const val HTTP4K_GROUP = "org.http4k"
+    const val HTTP4K_PLATFORM = "$HTTP4K_GROUP:http4k-bom:$HTTP4K_VERSION"
+    const val HTTP4K_CORE = "$HTTP4K_GROUP:http4k-core"
+    const val HTTP4K_JETTY = "$HTTP4K_GROUP:http4k-server-jetty"
 }
+
+
 
 object Data {
     private const val EXPOSED_GROUP = "org.jetbrains.exposed"

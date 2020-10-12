@@ -1,4 +1,4 @@
-package com.greyhairredbear.apitemplate.integration
+package com.greyhairredbear.apitemplate.integration.http4k
 
 import com.greyhairredbear.apitemplate.dal.setupDb
 import com.greyhairredbear.apitemplate.javalin.app
