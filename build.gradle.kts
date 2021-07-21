@@ -48,9 +48,8 @@ dependencies {
     implementation(Data.EXPOSED_DAO)
     implementation(Data.EXPOSED_JAVA_TIME)
 
-    implementation(Core.ARROW_FX)
+    implementation(Core.ARROW_FX_COROUTINES)
     implementation(Core.ARROW_OPTICS)
-    implementation(Core.ARROW_SYNTAX)
     // TODO: move H2 to test impl in case replacing it by postgres for production
     implementation(Testing.H2_TEST_DB)
 //    implementation(Data.POSTGRES_JDBC)

@@ -1,11 +1,12 @@
 package com.greyhairredbear.apitemplate
 
-import arrow.fx.IO
-import arrow.fx.extensions.fx
 import com.greyhairredbear.apitemplate.dal.setupDb
+import com.greyhairredbear.apitemplate.http4k.server
+import kotlinx.coroutines.runBlocking
 
 private const val SERVER_PORT = 7070
 
+/*
 fun main() {
     IO.fx {
         !effect { setupDb() }
@@ -13,4 +14,10 @@ fun main() {
     }.unsafeRunAsync {
         // TODO
     }
+}
+*/
+
+fun main(): Unit = runBlocking {
+    setupDb()
+    server(SERVER_PORT).start()
 }

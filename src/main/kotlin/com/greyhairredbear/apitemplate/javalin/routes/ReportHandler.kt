@@ -1,7 +1,5 @@
 package com.greyhairredbear.apitemplate.javalin.routes
 
-import arrow.fx.IO
-import arrow.fx.extensions.fx
 import com.greyhairredbear.apitemplate.javalin.ApiRole
 import com.greyhairredbear.apitemplate.javalin.routes.model.request.ReportBody
 import io.javalin.apibuilder.ApiBuilder.post
@@ -18,17 +16,12 @@ fun reportDocumentation(): OpenApiDocumentation = document()
 // TODO make all routes suspend funs, then pass as effect...
 fun report() = post("/report",
     documented(reportDocumentation()) { ctx ->
-        IO.fx {
-            !effect {
-                // TODO
-                "helloreport"
-            }
-        }.unsafeRunAsync {
-            it.fold(
-                { ctx.status(HttpStatus.SC_INTERNAL_SERVER_ERROR) },
-                { ctx.status(HttpStatus.SC_NO_CONTENT) }
-            )
-        }
+//        unsafeRunAsync {
+//            it.fold(
+//                { ctx.status(HttpStatus.SC_INTERNAL_SERVER_ERROR) },
+//                { ctx.status(HttpStatus.SC_NO_CONTENT) }
+//            )
+//        }
     },
     SecurityUtil.roles(ApiRole.ANYONE)
 )

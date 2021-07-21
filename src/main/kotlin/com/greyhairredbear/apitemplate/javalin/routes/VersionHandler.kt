@@ -1,9 +1,5 @@
 package com.greyhairredbear.apitemplate.javalin.routes
 
-import arrow.fx.IO
-import arrow.fx.extensions.fx
-import com.greyhairredbear.apitemplate.dal.Version
-import com.greyhairredbear.apitemplate.dal.max
 import com.greyhairredbear.apitemplate.javalin.ApiRole
 import com.greyhairredbear.apitemplate.javalin.routes.model.response.VersionResponse
 import io.javalin.apibuilder.ApiBuilder.get
@@ -12,7 +8,6 @@ import io.javalin.plugin.openapi.dsl.OpenApiDocumentation
 import io.javalin.plugin.openapi.dsl.document
 import io.javalin.plugin.openapi.dsl.documented
 import org.apache.http.HttpStatus
-import org.jetbrains.exposed.sql.transactions.transaction
 
 fun versionDocumentation(): OpenApiDocumentation = document()
     .result<VersionResponse>(HttpStatus.SC_OK.toString())
@@ -21,14 +16,14 @@ fun versionDocumentation(): OpenApiDocumentation = document()
 fun version(): Unit = get(
     "/version",
     documented(versionDocumentation()) { ctx ->
-        IO.fx {
-            !effect { transaction { Version.all().max() } }
-        }.unsafeRunAsync {
-            it.fold(
-                { ctx.status(HttpStatus.SC_INTERNAL_SERVER_ERROR) },
-                { ctx.result(it.toString()) }
-            )
-        }
+//        IO.fx {
+//            !effect { transaction { Version.all().max() } }
+//        }.unsafeRunAsync {
+//            it.fold(
+//                { ctx.status(HttpStatus.SC_INTERNAL_SERVER_ERROR) },
+//                { ctx.result(it.toString()) }
+//            )
+//        }
     },
     SecurityUtil.roles(ApiRole.ANYONE)
 )

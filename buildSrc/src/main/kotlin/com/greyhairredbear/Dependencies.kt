@@ -11,7 +11,7 @@ import Versions.SL4J_VERSION
 object Versions {
     const val KOTLIN_VERSION = "1.4.10"
 
-    const val ARROW_VERSION = "0.10.5"
+    const val ARROW_VERSION = "0.13.2"
 
     const val JAVALIN_VERSION = "3.9.1"
     const val SL4J_VERSION = "1.7.30"
@@ -37,9 +37,8 @@ object Plugins {
 object Core {
     private const val ARROW_GROUP = "io.arrow-kt"
     const val STD_LIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    const val ARROW_FX = "$ARROW_GROUP:arrow-fx:$ARROW_VERSION"
+    const val ARROW_FX_COROUTINES = "$ARROW_GROUP:arrow-fx-coroutines:$ARROW_VERSION"
     const val ARROW_OPTICS = "$ARROW_GROUP:arrow-optics:$ARROW_VERSION"
-    const val ARROW_SYNTAX = "$ARROW_GROUP:arrow-syntax:$ARROW_VERSION"
     const val ARROW_META = "$ARROW_GROUP:arrow-meta:$ARROW_VERSION"
 }
 
