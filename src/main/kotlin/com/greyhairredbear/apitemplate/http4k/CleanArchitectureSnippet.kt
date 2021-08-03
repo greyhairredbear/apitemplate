@@ -9,14 +9,14 @@ import kotlinx.coroutines.delay
 // ENTRY POINT, FRAMEWORKS & DRIVERS
 
 suspend fun main() {
-    execReservationUseCase(
+    reservationUseCase(
         UseCaseData(
             requestedSeats = 5,
             reservationName = "John Dorian",
             ::getCurrentlyReservedSeats,
             ::saveReservation,
         )
-    )().fold(
+    ).invoke().fold(
         ifLeft = { throw Exception(it.toString()) },
         ifRight = { println(it.newRecordId) },
     )
@@ -32,7 +32,7 @@ suspend fun getCurrentlyReservedSeats(): Either<ReadError, Int> {
     return 4.right()
 }
 
-suspend fun saveReservation(value: String): Either<WriteError, Long> {
+suspend fun saveReservation(value: String, reservationPossible: ReservationPossible): Either<WriteError, Long> {
     // ... writing something to db
     delay(1)
     return 42L.right() // newRecordId
@@ -43,16 +43,16 @@ suspend fun saveReservation(value: String): Either<WriteError, Long> {
 data class UseCaseData(
     val requestedSeats: Int,
     val reservationName: String,
-    val readVal: suspend () -> Either<ReadError, Int>,
-    val writeVal: suspend (String) -> Either<WriteError, Long>,
+    val getCurrentlyReservedSeats: suspend () -> Either<ReadError, Int>,
+    val writeVal: suspend (String, ReservationPossible) -> Either<WriteError, Long>,
 )
 
 data class UseCaseResultData(val newRecordId: Long)
 
-fun execReservationUseCase(data: UseCaseData): suspend () -> Either<Error, UseCaseResultData> = {
-    data.readVal()
+fun reservationUseCase(data: UseCaseData): suspend () -> Either<Error, UseCaseResultData> = {
+    data.getCurrentlyReservedSeats()
         .flatMap { reservationPossible(data.requestedSeats, it, CAPACITY) }
-        .flatMap { data.writeVal(data.reservationName) }
+        .flatMap { data.writeVal(data.reservationName, it) }
         .flatMap { UseCaseResultData(it).right() }
 }
 
@@ -63,9 +63,15 @@ const val CAPACITY = 10
 object RequestedTooManySeats : Error()
 sealed class Error
 
+data class ReservationPossible(val newNumberOfReservedSeats: Int)
+
 fun reservationPossible(
     requestedSeats: Int,
     reservedSeats: Int,
     capacity: Int
-): Either<RequestedTooManySeats, Unit> =
-    if (reservedSeats + requestedSeats <= capacity) Unit.right() else RequestedTooManySeats.left()
+): Either<RequestedTooManySeats, ReservationPossible> =
+    if (reservedSeats + requestedSeats <= capacity) {
+        ReservationPossible(requestedSeats + reservedSeats).right()
+    } else {
+        RequestedTooManySeats.left()
+    }
