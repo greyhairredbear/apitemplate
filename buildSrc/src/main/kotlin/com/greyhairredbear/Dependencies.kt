@@ -9,9 +9,9 @@ import Versions.REST_ASSURED_VERSION
 import Versions.SL4J_VERSION
 
 object Versions {
-    const val KOTLIN_VERSION = "1.4.10"
+    const val KOTLIN_VERSION = "1.5.31"
 
-    const val ARROW_VERSION = "0.13.2"
+    const val ARROW_VERSION = "1.0.0"
 
     const val JAVALIN_VERSION = "3.9.1"
     const val SL4J_VERSION = "1.7.30"

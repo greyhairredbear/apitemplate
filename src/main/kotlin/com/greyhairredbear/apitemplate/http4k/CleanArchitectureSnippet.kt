@@ -1,6 +1,7 @@
 @file:Suppress("MagicNumber", "TooGenericExceptionThrown")
 
 import arrow.core.Either
+import arrow.core.computations.either
 import arrow.core.flatMap
 import arrow.core.left
 import arrow.core.right
@@ -17,6 +18,18 @@ suspend fun main() {
             ::saveReservation,
         )
     ).invoke().fold(
+        ifLeft = { throw Exception(it.toString()) },
+        ifRight = { println(it.newRecordId) },
+    )
+
+    reservationUseCaseBind(
+        UseCaseData(
+            requestedSeats = 5,
+            reservationName = "John Dorian",
+            ::getCurrentlyReservedSeats,
+            ::saveReservation,
+        )
+    ).fold(
         ifLeft = { throw Exception(it.toString()) },
         ifRight = { println(it.newRecordId) },
     )
@@ -55,6 +68,15 @@ fun reservationUseCase(data: UseCaseData): suspend () -> Either<Error, UseCaseRe
         .flatMap { data.writeVal(data.reservationName, it) }
         .flatMap { UseCaseResultData(it).right() }
 }
+
+suspend fun reservationUseCaseBind(data: UseCaseData): Either<Error, UseCaseResultData> =
+    either {
+        val reservedSeats = data.getCurrentlyReservedSeats().bind()
+        val reservationPossible = reservationPossible(data.requestedSeats, reservedSeats, CAPACITY).bind()
+        val newReservationId = data.writeVal(data.reservationName, reservationPossible).bind()
+
+        UseCaseResultData(newReservationId)
+    }
 
 // ENTITIES
 
